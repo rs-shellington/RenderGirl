@@ -9,5 +9,18 @@ public class Triangle extends Plane {
 		super(p1,p2,p3);
 		
 	}
+	
+	@Override
+	public boolean hasIntersection(Ray ray) {
+		
+		if(super.hasIntersection(ray)) {
+			
+			return true;
+			
+		}
+		
+		return false;
+		
+	}
 
 }
