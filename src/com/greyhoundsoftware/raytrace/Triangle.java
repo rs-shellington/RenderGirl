@@ -14,48 +14,58 @@ public class Triangle extends Plane {
 	public boolean hasIntersection(Ray ray) {
 		
 		if(super.hasIntersection(ray)) {
-			
+
 			//intersection point 
 			double t = ray.getTmax();
 			Vector3D P = ray.point.add(ray.direction.scalarMultiply(t));
-			
-			/*
-			//
-		    // Step 2: inside-outside test
-		    //
-		 
-		    vector C; // vector perpendicular to triangle's plane
-		 
-		    // edge 0
-		    vector edge0 = v1 - v0;
-		    vector VP0 = P - v0;
-		    C = cross(edge0, VP0);
-		    if (dot(N, C) < 0)
-		        return false; // P is on the right side
-		 
-		    // edge 1
-		    vector edge1 = v2 - v1;
-		    vector VP1 = P - v1;
-		    C = cross(edge0, VP1);
-		    if (dot(N, C) < 0)
-		        return false; // P is on the right side
-		 
-		    // edge 2
-		    vector edge2 = v0 - v2;
-		    vector VP2 = P - v2;
-		    C = cross(CA, CP);
-		    if (dot(N, C) < 0)
-		        return false; // P is on the right side;
-		 
-		    return true; // this ray hits the triangle
-			*/
-			
+
+			// This was my reference...
+			// http://scratchapixel.com/lessons/3d-basic-lessons/lesson-9-ray-triangle-intersection/ray-triangle-intersection-geometric-solution/
+
+			Vector3D v0v1 = p2.subtract(p1);
+			Vector3D v0v2 = p3.subtract(p1);
+			Vector3D N = v0v1.crossProduct(v0v2);
+			double nDotRay = N.dotProduct(ray.direction);
+			if(nDotRay == 0) {  //ray parallel to triangle
+				return false;
+			}
+
+
+			// inside-out test edge0
+
+			Vector3D v0p = P.subtract(p1);
+			double v = N.dotProduct(v0v1.crossProduct(v0p));
+			if (v < 0.0) {
+				return false;
+			}
+
+
+
+			// inside-out test edge1
+
+			Vector3D v1p = P.subtract(p2);
+			Vector3D v1v2 = p3.subtract(p2);
+			double w = N.dotProduct(v1v2.crossProduct(v1p));
+			if(w < 0) {
+				return false;
+			}
+
+			// inside-out test edge2
+
+			Vector3D v2p = P.subtract(p3);
+			Vector3D v2v0 = p1.subtract(p3);
+			double u = N.dotProduct(v2v0.crossProduct(v2p));
+			if (u < 0) {
+				return false;
+			}
+
+
 			return true;
-			
+
 		}
-		
+
 		return false;
-		
+
 	}
 
 }
