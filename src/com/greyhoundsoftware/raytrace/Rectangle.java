@@ -21,5 +21,15 @@ public class Rectangle extends SceneObject {
 		return t1.hasIntersection(ray) || t2.hasIntersection(ray);
 		
 	}
+	
+	@Override
+	public Vector3D getNormal(Vector3D point) {
+		
+		//The point doesn't really matter, both triangles have the same normal
+		//Just return one
+		
+		return t1.getNormal(point);
+		
+	}
 
 }
