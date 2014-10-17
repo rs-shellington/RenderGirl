@@ -52,34 +52,47 @@ public class RenderGirl {
         		Ray ray = new Ray(cameraPos, dir);
         		//Ray ray = new Ray(r.applyTo(cameraPos),r.applyTo(dir));
         		
+        		SceneObject closest = null;
+        		double tmin = 999999999;
+        		
         		for(SceneObject o : scene.getObjects()) {
-        			
+        		
         			if(o.hasIntersection(ray)) {
-        				int redAmb = getAmbient(scene, o.getMaterial(), Material.COLOR.RED);
-    					int greenAmb = getAmbient(scene, o.getMaterial(), Material.COLOR.GREEN);
-    					int blueAmb = getAmbient(scene, o.getMaterial(), Material.COLOR.BLUE);
-        				Vector3D c = new Vector3D(redAmb,greenAmb,blueAmb);
         				
-        				for(Light l : scene.getLights()) {
-        					c = c.add(shade(l,scene,o,ray));
+        				if(ray.getTmin() < tmin) {
+        					closest = o;
+        					tmin = ray.getTmin();
         				}
-        				
-        				//img.setRGB(i,j,shade(scene.getLights().get(0),scene,o,ray));
-        				int red = (int)Math.min(c.getX(), 255);
-        				int green = (int)Math.min(c.getY(),255);
-        				int blue = (int)Math.min(c.getZ(),255);
-        				img.setRGB(i, j, (red<<16) + (green<<8) + blue);
         			}
         			
         		}
         		
+        		if(closest != null) {
+        			
+        			ray.setTmin(tmin);
+        			
+        			int redAmb = getAmbient(scene, closest.getMaterial(), Material.COLOR.RED);
+        			int greenAmb = getAmbient(scene, closest.getMaterial(), Material.COLOR.GREEN);
+        			int blueAmb = getAmbient(scene, closest.getMaterial(), Material.COLOR.BLUE);
+        			Vector3D c = new Vector3D(redAmb,greenAmb,blueAmb);
+
+        			for(Light l : scene.getLights()) {
+        				c = c.add(shade(l,scene,closest,ray));
+        			}
+
+        			//img.setRGB(i,j,shade(scene.getLights().get(0),scene,o,ray));
+        			int red = (int)Math.min(c.getX(), 255);
+        			int green = (int)Math.min(c.getY(),255);
+        			int blue = (int)Math.min(c.getZ(),255);
+        			img.setRGB(i, j, (red<<16) + (green<<8) + blue);
+        		}
+        			
+        		
+        		
         	}
         }
 		
-		Vector3D z = new Vector3D(0,0,1);
-		Vector3D y = new Vector3D(0,1,0);
-		System.out.println(z.dotProduct(y));
-		System.out.println(Vector3D.crossProduct(y, z));
+		
 		
 		
 		return img;
@@ -91,7 +104,7 @@ public class RenderGirl {
 		//Light l = scene.getLights().get(0);
 		
 		Vector3D dir = ray.getDirection();
-		Vector3D intersectPt = ray.getPoint().add(dir.scalarMultiply(ray.getTmin()+.001));
+		Vector3D intersectPt = ray.getPoint().add(dir.scalarMultiply(ray.getTmin()+1e-10));
 		//intersectPt = intersectPt.add(new Vector3D(.001,.001,.001));
 		Vector3D lightDir = l.getPosition().subtract(intersectPt).normalize();
 		

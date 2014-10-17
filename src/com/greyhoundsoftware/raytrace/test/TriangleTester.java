@@ -63,7 +63,7 @@ public class TriangleTester {
         scene.addLight(light);
         
         Light l2 = new Light(0,0,0,.8,.8,.8);
-        scene.addLight(l2);
+        //scene.addLight(l2);
         
         SceneObject s = new Sphere(.75, new Vector3D(0,2,-7));
         Material m5 = new Material(new Vector3D(0,0,1), new Vector3D(0,0,1),new Vector3D(0,0,1));
@@ -74,9 +74,9 @@ public class TriangleTester {
         s2.setMaterial(m5);
         //scene.addObject(s2);
         
-        SceneObject t1 = new Triangle(new Vector3D(-1,0,-7), 
-        		                      new Vector3D(1,0,-7),
-        		                      new Vector3D(0,Math.sqrt(3.0),-7));
+        SceneObject t1 = new Triangle(new Vector3D(-1,0,-7.1), 
+        		                      new Vector3D(1,0,-7.1),
+        		                      new Vector3D(0,Math.sqrt(3.0),-7.1));
         t1.setMaterial(m5);
         scene.addObject(t1);
         
