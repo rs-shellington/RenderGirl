@@ -1,5 +1,6 @@
 package com.greyhoundsoftware.raytrace;
 
+import org.apache.commons.math3.geometry.euclidean.threed.Rotation;
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 
 public class Triangle extends Plane {
@@ -66,6 +67,36 @@ public class Triangle extends Plane {
 
 		return false;
 
+	}
+	
+	@Override
+	public Triangle rotate(Rotation rotate) {
+		
+		Vector3D p1New = rotate.applyTo(p1);
+		Vector3D p2New = rotate.applyTo(p2);
+		Vector3D p3New = rotate.applyTo(p3);
+		
+		Triangle tri = new Triangle(p1New,p2New,p3New);
+		tri.setMaterial(material);
+		tri.setName(name);
+		
+		return tri;
+		
+	}
+	
+	@Override
+	public Triangle transpose(Vector3D t) {
+	
+		Vector3D p1New = p1.add(t);
+		Vector3D p2New = p2.add(t);
+		Vector3D p3New = p3.add(t);
+		
+		Triangle tri = new Triangle(p1New,p2New,p3New);
+		tri.setMaterial(material);
+		tri.setName(name);
+		
+		return tri;
+	
 	}
 
 }
