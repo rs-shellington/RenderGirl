@@ -57,6 +57,13 @@ public class RenderGirlModel {
         plane.setMaterial(m4); 
         //scene.addObject(plane);
 		
+        SceneObject tri = new Triangle(new Vector3D(-1,0,-7), 
+                          new Vector3D(1,0,-7),
+                          new Vector3D(0,Math.sqrt(3.0),-7));
+        tri.setName("Purple triangle");
+        tri.setMaterial(m);
+        scene.addObject(tri);
+        
 		int width=1024;
 		int height = 768;
 		RenderGirl theGirl = new RenderGirl(scene,width,height);

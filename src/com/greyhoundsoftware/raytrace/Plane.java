@@ -1,5 +1,6 @@
 package com.greyhoundsoftware.raytrace;
 
+import org.apache.commons.math3.geometry.euclidean.threed.Rotation;
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 
 public class Plane extends SceneObject {
@@ -62,5 +63,25 @@ public class Plane extends SceneObject {
 		
 		return normal;
 		
+	}
+
+	@Override
+	public SceneObject rotate(Rotation rotate) {
+		
+		Plane p = new Plane(rotate.applyTo(r0), rotate.applyTo(normal));
+		p.setMaterial(material);
+		p.setName(name);
+		
+		return p;
+	}
+
+	@Override
+	public SceneObject transpose(Vector3D t) {
+		
+		Plane p = new Plane(r0.add(t), normal.add(t).normalize());
+		p.setMaterial(material);
+		p.setName(name);
+		
+		return p;
 	}
 }

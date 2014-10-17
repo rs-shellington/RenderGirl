@@ -61,6 +61,11 @@ public class PlaneTester {
         s2.setMaterial(m5);
         scene.addObject(s2);
         
+        SceneObject sq = new Rectangle(new Vector3D(-2,2,-7),new Vector3D(-1,2,-7),
+        		                       new Vector3D(-2,0,-6),new Vector3D(-1,0,-6));
+        sq.setMaterial(m5);
+        scene.addObject(sq);
+        
         RenderGirl theGirl = new RenderGirl(scene, width, height);
         BufferedImage img = theGirl.render();
         

@@ -3,7 +3,7 @@ package com.greyhoundsoftware.raytrace;
 import org.apache.commons.math3.geometry.euclidean.threed.Rotation;
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 
-public class SceneObject {
+abstract public class SceneObject {
 	
 	
 	protected Material material;
@@ -14,12 +14,7 @@ public class SceneObject {
 		
 	}
 	
-	public boolean hasIntersection(Ray ray) {
-		
-		return false;
-		
-	}
-	
+	abstract public boolean hasIntersection(Ray ray);
 	
 	public Vector3D getColor() {
 		return Vector3D.ZERO;
@@ -45,17 +40,9 @@ public class SceneObject {
 		this.material = material;
 	}
 	
-	public SceneObject rotate(Rotation rotate) {
-		
-		return new SceneObject();
-		
-	}
+	abstract public SceneObject rotate(Rotation rotate);
 	
-	public SceneObject transpose(Vector3D t) {
-		
-		return new SceneObject();
-		
-	}
+	abstract public SceneObject transpose(Vector3D t);
 
 	public String getName() {
 		return name;

@@ -148,7 +148,7 @@ public class MaterialEditor extends JFrame
 		
 		//Ka, Kd, color
 		Material m = new Material(Vector3D.ZERO, Vector3D.ZERO, Vector3D.ZERO);
-		SceneObject o = new SceneObject();
+		SceneObject o = new Sphere();
 		o.setMaterial(m);
 		Scene s = new Scene();
 		s.addObject(o);
