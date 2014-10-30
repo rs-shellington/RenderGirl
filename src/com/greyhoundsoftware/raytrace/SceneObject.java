@@ -26,11 +26,7 @@ abstract public class SceneObject {
 	
 	}
 	
-	public Vector3D getNormal(Vector3D point) {
-		
-		return Vector3D.ZERO;
-		
-	}
+	abstract public Vector3D getNormal(Vector3D point);
 
 	public Material getMaterial() {
 		return material;

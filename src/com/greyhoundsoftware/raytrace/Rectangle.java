@@ -41,7 +41,7 @@ public class Rectangle extends SceneObject {
 	}
 
 	@Override
-	public SceneObject rotate(Rotation rotate) {
+	public Rectangle rotate(Rotation rotate) {
 		
 		Rectangle r = new Rectangle(t1.rotate(rotate), t2.rotate(rotate));
 		r.setMaterial(material);
@@ -51,7 +51,7 @@ public class Rectangle extends SceneObject {
 	}
 
 	@Override
-	public SceneObject transpose(Vector3D t) {
+	public Rectangle transpose(Vector3D t) {
 		
 		Rectangle r = new Rectangle(t1.transpose(t), t2.transpose(t));
 		r.setMaterial(material);
