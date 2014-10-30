@@ -98,5 +98,33 @@ public class Triangle extends Plane {
 		return tri;
 	
 	}
+	
+	/*function SameSide(p1,p2, a,b)
+    cp1 = CrossProduct(b-a, p1-a)
+    cp2 = CrossProduct(b-a, p2-a)
+    if DotProduct(cp1, cp2) >= 0 then return true
+    else return false
 
+    function PointInTriangle(p, a,b,c)
+    if SameSide(p,a, b,c) and SameSide(p,b, a,c)
+        and SameSide(p,c, a,b) then return true
+    else return false
+   */
+	protected boolean sameSide(Vector3D p1,Vector3D p2, Vector3D a, Vector3D b) {
+		Vector3D cp1 = b.subtract(a).crossProduct(p1.subtract(a));
+		Vector3D cp2 = b.subtract(a).crossProduct(p2.subtract(a));
+		
+		return cp1.dotProduct(cp2) >= 0.0;
+		
+	}
+	public boolean contains(Vector3D point) {
+		
+		if(sameSide(point,p1,p2,p3) && sameSide(point,p2,p1,p3)&&
+				sameSide(point,p3,p1,p2)) {
+			return true;
+		}
+		
+		return false;
+		
+	}
 }

@@ -69,16 +69,21 @@ public class BoxTester {
         SceneObject s = new Sphere(.75, new Vector3D(0,2,-7));
         Material m5 = new Material(new Vector3D(0,0,1), new Vector3D(0,0,1),new Vector3D(0,0,1));
         s.setMaterial(m5);
-        //scene.addObject(s);
+        scene.addObject(s);
         
         SceneObject s2= new Sphere(.25, new Vector3D(0,0,-7));
         s2.setMaterial(m5);
         //scene.addObject(s2);
         
-        SceneObject box = new Box(.5, .5, .5, new Vector3D(1.5,0,-5));
+        //SceneObject box = new Box(.5, .5, .5, new Vector3D(1.5,0,-5));
+        SceneObject box = new Box(.5,.5,.5,new Vector3D(-1.5,0,-5));
         box.setMaterial(m5);
-        box = box.rotate(new Rotation(new Vector3D(0,1,0), Math.PI/8.));
-        //scene.addObject(box);
+        //box = box.rotate(new Rotation(new Vector3D(0,1,0), Math.PI/8.));
+        scene.addObject(box);
+        
+        SceneObject bb = new Box(.5,.5,.5,new Vector3D(0,0,-5));
+        bb.setMaterial(m5);
+        scene.addObject(bb);
         
         Box btest = new Box(.5, .5, .5, new Vector3D(1.5,0,-5));
         btest = btest.rotate(new Rotation(new Vector3D(0,1,0),Math.PI/8.));

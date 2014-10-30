@@ -82,10 +82,17 @@ public class Box extends SceneObject {
 		return sides.get(0).hasIntersection(ray);
 		*/
 		
+		double tmin = Double.MAX_VALUE;
 		for(Rectangle r : sides) {
 			if(r.hasIntersection(ray)) {
-				return true;
+				if(ray.getTmin() < tmin) {
+					tmin = ray.getTmin();
+				}
 			}
+		}
+		if(tmin < Double.MAX_VALUE) {
+			ray.setTmin(tmin);
+			return true;
 		}
 		
 		return false;
@@ -126,7 +133,17 @@ public class Box extends SceneObject {
 	public Vector3D getNormal(Vector3D point) {
 		// TODO Auto-generated method stub
 		
-		return sides.get(0).getNormal(point);
+		//figure out which side is the intersection
+		for(Rectangle r : sides) {
+			
+			if(r.t1.contains(point) || r.t2.contains(point)) {
+				return r.getNormal(point);
+			}
+			
+		}
+
+		System.out.println("Ack!");
+		return Vector3D.ZERO;
 	}
 
 	public List<Rectangle>getSides() {
