@@ -78,18 +78,18 @@ public class BoxTester {
         //SceneObject box = new Box(.5, .5, .5, new Vector3D(1.5,0,-5));
         SceneObject box = new Box(.5,.5,.5,new Vector3D(-1.5,0,-5));
         box.setMaterial(m5);
-        //box = box.rotate(new Rotation(new Vector3D(0,1,0), Math.PI/8.));
-        scene.addObject(box);
+        box = box.rotate(new Rotation(new Vector3D(0,1,0), Math.PI/8.));
+        scene.addObject(box.transpose(new Vector3D(0,1,0)));
         
         SceneObject bb = new Box(.5,.5,.5,new Vector3D(0,0,-5));
         bb.setMaterial(m5);
-        scene.addObject(bb);
+        //scene.addObject(bb);
         
         Box btest = new Box(.5, .5, .5, new Vector3D(1.5,0,-5));
         btest = btest.rotate(new Rotation(new Vector3D(0,1,0),Math.PI/8.));
         for(Rectangle r : btest.getSides()) {
         	r.setMaterial(m5);
-        	scene.addObject(r);
+        	//scene.addObject(r);
         	
         }
         

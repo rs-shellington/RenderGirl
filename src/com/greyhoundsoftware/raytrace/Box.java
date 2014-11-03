@@ -12,6 +12,8 @@ public class Box extends SceneObject {
 	Vector3D center;
 	List<Rectangle> sides;
 	
+	Vector3D normal = Vector3D.ZERO;
+	
 	public Box(double depth, double width, double height, Vector3D center) {
 		
 		this.depth = depth;
@@ -58,13 +60,22 @@ public class Box extends SceneObject {
 		//public Rectangle(Vector3D ul, Vector3D ur, 
 		//	     Vector3D ll, Vector3D lr)
 		Rectangle front = new Rectangle(ful, fur, fll, flr);
+		front.setName("front");
+		
 		Rectangle back = new Rectangle(bul,bur,bll,blr);
+		back.setName("back");
 		
 		Rectangle top = new Rectangle(bul,bur,ful,fur);
+		top.setName("top");
+		
 		Rectangle bottom = new Rectangle(bll,blr,fll,flr);
+		bottom.setName("bottom");
 		
 		Rectangle left = new Rectangle(bul,ful,bll,fll);
+		left.setName("left");
+		
 		Rectangle right = new Rectangle(bur,fur,blr,flr);
+		right.setName("right");
 		
 		sides.add(front);
 		sides.add(back);
@@ -78,15 +89,15 @@ public class Box extends SceneObject {
 	@Override
 	public boolean hasIntersection(Ray ray) {
 		
-		/*Rectangle front = sides.get(0);
-		return sides.get(0).hasIntersection(ray);
-		*/
+		
 		
 		double tmin = Double.MAX_VALUE;
 		for(Rectangle r : sides) {
 			if(r.hasIntersection(ray)) {
 				if(ray.getTmin() < tmin) {
 					tmin = ray.getTmin();
+					//save the normal for a quick fetch later
+					normal = r.getNormal(Vector3D.ZERO);
 				}
 			}
 		}
@@ -102,7 +113,7 @@ public class Box extends SceneObject {
 	@Override
 	public Box rotate(Rotation rotate) {
 		
-		
+		System.out.println(center.add(center.negate()));
 		
 		Box origin = transpose(center.negate());
 		
@@ -120,10 +131,16 @@ public class Box extends SceneObject {
 	@Override
 	public Box transpose(Vector3D t) {
 		
+		List<Rectangle> newsides = new ArrayList<Rectangle>();
 		
-		Vector3D rotated = center.add(t);
-		Box b = new Box(depth,width,height,rotated);
+		for(Rectangle r : sides) {
+			newsides.add(r.transpose(t));
+		}
+		
+		Vector3D transposed = center.add(t);
+		Box b = new Box(depth,width,height,transposed);
 		b.setMaterial(material);
+		b.sides = newsides;
 		
 		return b;
 		
@@ -131,19 +148,12 @@ public class Box extends SceneObject {
 
 	@Override
 	public Vector3D getNormal(Vector3D point) {
-		// TODO Auto-generated method stub
 		
-		//figure out which side is the intersection
-		for(Rectangle r : sides) {
-			
-			if(r.t1.contains(point) || r.t2.contains(point)) {
-				return r.getNormal(point);
-			}
-			
-		}
-
-		System.out.println("Ack!");
-		return Vector3D.ZERO;
+		//returns the normal of the face that last had an intersection
+		//test return true
+		
+		return normal;
+		
 	}
 
 	public List<Rectangle>getSides() {
